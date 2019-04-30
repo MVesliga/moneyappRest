@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/headerInclude :: head"></head>
+<body>
+<main class="wrapper">
+    <header th:replace="fragments/header :: header"></header>
+    <br/>
+    <br/>
+    <div class="container" style="text-align: center">
+    <div class="col-md-12 help">
+        <p>Čestitamo, uspješno ste izmjenili trošak <b><span th:text="${expense.expenseName}">expense.name</span></b> u iznosu <span th:text="${expense.amount}">expense.amount</span> kn.</p>
+        <p>Trošak je unesen pod kategoriju <b><span th:text="${expense.type}"></span></b> na datum <span th:text="${#calendars.format(#calendars.createNow(), 'dd.MM.yyyy.')}">datum</span></p>
+        <p>Trenutno stanje u novčaniku <b><span th:text="${wallet.walletName}">expense.wallet.name</span></b> je <span th:text="${session.sumOfExpenses.toString()}">Sum of expenses</span></p>
+    </div>
+    </div>
+    <div style="text-align: center">
+        <button class="btn btn-warning gumb"><a th:href="@{/expenses/new}">Unesi novi trošak</a></button>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/headerInclude :: head"></head>
+<body>
+<main class="wrapper">
+    <header>
+        <div th:replace="fragments/header :: header"></div>
+    </header>
+
+    <div class="container">
+        <div class=" col-md-8 help">
+            <div class="row">
+                <h1>Unos novog troška </h1>
+            </div>
+            <form method="POST" th:object="${user}">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Username:</label>
+                    </div>
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" th:field="*{username}">
+                        <span class="validation-error" style="color:#ffc107;" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">User username error</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label>Passsword:</label>
+                    </div>
+                    <div class="col-sm-12">
+                        <input type="password" class="form-control" th:field="*{password}">
+                        <span class="validation-error" style="color:#ffc107;" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">User password error</span>
+                    </div>
+                </div>
+                <div style="text-align: center">
+                    <!--<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>-->
+                    <input type="submit" class="btn btn-warning gumb" style="color:black;" value="Registriraj me">
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

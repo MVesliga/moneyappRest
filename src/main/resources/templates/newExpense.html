@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/headerInclude :: head"></head>
+<body>
+<main class="wrapper">
+    <header>
+        <div th:replace="fragments/header :: header"></div>
+    </header>
+
+    <div style="text-align: center" sec:authorize="isAuthenticated()">
+        <form method="POST" th:action="@{/logout}">
+            Ulogirani ste kao <span sec:authentication="name">Korisnik</span>.
+            <input type="submit" value="Logout" class="btn btn-danger gumb">
+        </form>
+    </div>
+
+    <div class="container">
+        <div class=" col-md-8 help">
+            <div class="row">
+                <h1>Unos novog troška </h1>
+            </div>
+            <form method="POST" th:object="${expense}">
+                <div class="row">
+                        <div class="col-sm-12">
+                            <label>Naziv:</label>
+                        </div>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" th:field="*{expenseName}">
+                            <span class="validation-error" style="color:#ffc107;" th:if="${#fields.hasErrors('expenseName')}" th:errors="*{expenseName}">Expense name error</span>
+                        </div>
+                </div>
+                <div class="form-group">
+                    <label>Vrsta:</label>
+                    <select th:field="*{type}" class="form-control">
+                        <option value="">>---------Odaberite vrstu---------<</option>
+                        <option th:each="type : ${expenseTypes}" th:value="${type}" th:text="${type}"></option>
+                    </select>
+                    <span class="validation-error" style="color:#ffc107;" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Expense type error</span>
+                </div>
+                <div class="form-group">
+                    <label>Iznos:</label>
+                    <input type="number" step="0.01" class="form-control" th:field="*{amount}">
+                    <span class="validation-error" style="color:#ffc107;" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Expense amount error</span>
+                </div>
+                <div style="text-align: center">
+                    <!--<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>-->
+                    <input type="submit" class="btn btn-warning gumb" style="color:black;" value="Unesi trošak">
+                    <button class="btn btn-warning gumb" style="color:black;"><a th:href="@{/expenses/showExpenses}">Prikaži moje troškove</a></button>
+                    <!--<button class="btn btn-warning gumb" style="color:black;"><a th:href="@{/expenses/administration}">Prikaži administraciju</a></button>-->
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

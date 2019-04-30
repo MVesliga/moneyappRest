@@ -1,0 +1,44 @@
+body,html{
+    padding:30px;
+    height: 100%;
+    width:100%;
+    overflow: auto;
+}
+body{
+    background-image: url("../images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.wrapper{
+    display: table;
+    margin: 0 auto;
+    max-width: 1000px;
+    min-width: 100px;
+    height: 80%;
+    width:100%;
+    padding: 10px;
+    box-shadow: 0 0 10px 1px azure;
+    margin-top: 30px;
+    color: white;
+
+}
+header{
+    text-align: center;
+}
+header img{
+    width: 100%;
+}
+.gumb{
+    margin-top: 10px;
+}
+.gumb a{
+    color: black !important;
+    text-decoration: none;
+}
+.help{
+    margin: 0 auto;
+}
+label{
+    display: -webkit-box !important;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/headerInclude :: head"></head>
+<body>
+<main class="wrapper">
+    <header th:replace="fragments/header :: header"></header>
+    <br/>
+    <div style="text-align: center" sec:authorize="isAuthenticated()">
+        <form method="POST" th:action="@{/logout}">
+            Ulogirani ste kao <span sec:authentication="name">Korisnik</span>.
+            <input type="submit" value="Logout" class="btn btn-danger gumb">
+        </form>
+    </div>
+    <br/>
+    <div class="container" style="text-align: center">
+        <div style="overflow-x: auto;" class="col-md-12 help">
+            <table class="table">
+                <thead>
+                <th>Username</th>
+                <th>Authority</th>
+                </thead>
+                <tbody>
+                <tr th:each="authority : ${authorities}">
+                    <td th:text="${authority.username}">User</td>
+                    <td th:text="${authority.authority}">Authority</td>
+                    <td>
+                        <form method="POST" th:object="${authority}">
+                            <input type="hidden" th:field="*{username}">
+                            <input type="hidden" th:field="*{authority}">
+                            <button th:if="${authority.authority}== 'ROLE_ADMIN'" type="submit" class="btn btn-danger gumb">Oduzmi admin ovlasti</button>
+                            <button th:if="${authority.authority}!= 'ROLE_ADMIN'" type="submit" class="btn btn-danger gumb">Dodaj admin ovlasti</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div style="text-align: center">
+        <button class="btn btn-warning gumb"><a th:href="@{/expenses/new}">Unesi novi trošak</a></button>
+        <button class="btn btn-warning gumb"><a th:href="@{/expenses/showExpenses}">Prikaži moje troškove</a></button>
+    </div>
+</main>
+</body>
+</html>
