@@ -65,9 +65,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .defaultSuccessUrl("/expenses/new", true)
                 .and()
                 .logout()
-                .logoutSuccessUrl("/");
-                /*.and()
-                .csrf().ignoringAntMatchers("/api/**","/login","/logout");*/
+                .logoutSuccessUrl("/")
+                .and()
+                .csrf().ignoringAntMatchers("/api/**","/login","/logout");
 
         http.csrf().disable();
         http.headers().frameOptions().disable();

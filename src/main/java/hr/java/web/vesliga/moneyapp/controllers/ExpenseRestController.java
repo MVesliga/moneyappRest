@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+
 
 @RestController
 @RequestMapping(path="/api/expenses", produces = "application/json")
@@ -67,15 +67,9 @@ public class ExpenseRestController {
     @PutMapping("/{id}")
     public void update(@RequestBody Expense newExpense, @PathVariable Long id){
         Expense expense = expenseRepository.findOne(id);
+        newExpense.setWallet(expense.getWallet());
 
-        /*expense.setCreateDate(LocalDateTime.now());
-        expense.setExpenseName(newExpense.getExpenseName());
-        expense.setAmount(newExpense.getAmount());
-        expense.setType(newExpense.getType());
-        expense.setWallet(newExpense.getWallet());*/
-        expenseRepository.update(id,expense);
-
-        //return expense;
+        expenseRepository.update(id,newExpense);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
