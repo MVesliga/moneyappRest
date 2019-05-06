@@ -1,4 +1,4 @@
-package hr.java.web.vesliga.moneyapp.repositories;
+/*package hr.java.web.vesliga.moneyapp.repositories;
 
 import hr.java.web.vesliga.moneyapp.model.Expense;
 import hr.java.web.vesliga.moneyapp.model.Wallet;
@@ -81,3 +81,4 @@ public class JdbcExpenseRepository implements ExpenseRepository {
 
     }
 }
+*/

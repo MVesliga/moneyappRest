@@ -1,4 +1,4 @@
-package hr.java.web.vesliga.moneyapp.repositories;
+/*package hr.java.web.vesliga.moneyapp.repositories;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -80,4 +80,4 @@ public class HibernateExpenseRepository implements ExpenseRepository {
         session.update(editedExpense);
 
     }
-}
+}*/

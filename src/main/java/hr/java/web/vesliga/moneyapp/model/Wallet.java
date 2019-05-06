@@ -24,13 +24,17 @@ public class Wallet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="create_date")
     private LocalDateTime createDate;
 
+    @Column(name="wallet_name")
     private String walletName;
 
     @Enumerated(EnumType.STRING)
+    @Column(name="wallet_type")
     private walletType walletType;
 
+    @Column(name="user_name")
     private String userName;
 
     @OneToMany(mappedBy = "wallet", fetch = FetchType.EAGER)

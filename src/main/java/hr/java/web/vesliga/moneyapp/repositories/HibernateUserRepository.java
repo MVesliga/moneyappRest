@@ -1,4 +1,4 @@
-package hr.java.web.vesliga.moneyapp.repositories;
+/*package hr.java.web.vesliga.moneyapp.repositories;
 
 import hr.java.web.vesliga.moneyapp.model.User;
 import org.hibernate.Session;
@@ -30,9 +30,9 @@ public class HibernateUserRepository implements UserRepository{
     }
 
     @Override
-    public User findOne(String username) {
+    public User findOne(Long id) {
         Session session = (Session) em.getDelegate();
-        return (User)session.createQuery("SELECT u FROM User u where u.username = :username").setParameter("username",username).getSingleResult();
+        return (User)session.createQuery("SELECT u FROM User u where u.id = :id").setParameter("id",id).getSingleResult();
     }
 
     @Override
@@ -46,9 +46,25 @@ public class HibernateUserRepository implements UserRepository{
     }
 
     @Override
-    public void delete(User user) {
+    public void delete(Long id) {
         Session session = (Session)em.getDelegate();
         em.joinTransaction();
-        session.delete(user);
+        session.createQuery("DELETE User u WHERE u.id = :id").setParameter("id",id).executeUpdate();
+    }
+
+    @Override
+    public void update(Long id, User user) {
+        Session session = (Session)em.getDelegate();
+        em.joinTransaction();
+
+        User editedUser = findOne(id);
+
+        editedUser.setUsername(user.getUsername());
+        editedUser.setPassword(user.getPassword());
+        editedUser.setEnabled(user.isEnabled());
+
+        session.update(editedUser);
+
     }
 }
+*/

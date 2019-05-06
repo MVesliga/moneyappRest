@@ -1,12 +1,31 @@
 package hr.java.web.vesliga.moneyapp.repositories;
 
 import hr.java.web.vesliga.moneyapp.model.Expense;
+import org.hibernate.query.criteria.internal.compile.ExplicitParameterInfo;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface ExpenseRepository {
+
+import java.util.List;
+import java.util.Optional;
+
+public interface ExpenseRepository extends CrudRepository<Expense, Long> {
     Iterable<Expense> findAll();
-    Expense findOne(Long id);
+    Optional<Expense> findById(Long id);
+    void deleteById(Long id);
     Expense save(Expense expense);
-    void delete(Long id);
-    void resetWallet(Long id);
-    void update(Long id, Expense expense);
+    List<Expense> findByExpenseNameLike(String expenseName);
+
+    @Transactional
+    @Modifying
+    @Query("delete from Expense e where e.wallet.id = :id")
+    void resetWallet(@Param("id") Long id);
+
+    @Transactional
+    @Modifying
+    @Query("update Expense e set e = :expense where e.id = :id")
+    void update(@Param("id") Long id, @Param("expense") Expense expense);
 }

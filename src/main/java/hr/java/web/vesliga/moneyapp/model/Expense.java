@@ -1,6 +1,7 @@
 package hr.java.web.vesliga.moneyapp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jdk.jfr.Name;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,11 +26,12 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Column(name="create_date")
     private LocalDateTime createDate;
 
     @NotEmpty(message="Niste unjeli naziv troška!")
     @Size(min=5, max=30, message="Naziv troška mora imati između 5 i 30 znakova")
+    @Column(name="expense_name")
     private String expenseName;
 
 
@@ -37,13 +39,13 @@ public class Expense {
     @DecimalMin(value="1",message="Možete unjeti minimalni iznos od 1 kn!")
     private Double amount;
 
-    @Column(name="expenseType")
+    @Column(name="expense_type")
     @Enumerated(EnumType.STRING)
     @NotNull(message="Niste odabrali vrstu troška!")
     private expenseType type;
 
     @ManyToOne(targetEntity = Wallet.class)
-    @JoinColumn(name="walletId")
+    @JoinColumn(name="wallet_id")
     @JsonBackReference
     private Wallet wallet;
 

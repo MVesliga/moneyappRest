@@ -1,4 +1,4 @@
-package hr.java.web.vesliga.moneyapp.repositories;
+/*package hr.java.web.vesliga.moneyapp.repositories;
 
 import hr.java.web.vesliga.moneyapp.model.Wallet;
 import org.hibernate.Session;
@@ -58,3 +58,4 @@ public class HibernateWalletRepository  implements WalletRepository{
         session.createQuery("DELETE Wallet w WHERE w.id = :id").setParameter("id",id).executeUpdate();
     }
 }
+*/

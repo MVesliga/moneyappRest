@@ -10,6 +10,7 @@ import hr.java.web.vesliga.moneyapp.repositories.WalletRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,17 +33,23 @@ import java.util.List;
 @SessionAttributes({"expenseTypes","wallet","sumOfExpenses"})
 public class ExpenseController {
 
-    @Autowired
+
     private ExpenseRepository expenseRepository;
-    @Autowired
+
     private WalletRepository walletRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public ExpenseController(ExpenseRepository expenseRepository, WalletRepository walletRepository){
+        this.expenseRepository = expenseRepository;
+        this.walletRepository = walletRepository;
+    }
 
     @ModelAttribute("wallet")
     public Wallet setWallet(HttpSession session){
 
         Wallet wallet = new Wallet();
+        Long id = Long.valueOf(1);
         Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = "";
         if (user instanceof UserDetails) {
@@ -50,8 +58,23 @@ public class ExpenseController {
              username = user.toString();
         }
 
-        try{
-            wallet = walletRepository.findOneByUsername(username);
+
+
+        if(walletRepository.findByUserNameLike(username) == null){
+            log.info("Kreira se  novčanik.");
+            wallet.setUserName(username);
+            wallet.setWalletName(username + " wallet");
+            wallet.setWalletType(Wallet.walletType.Gotovina);
+            wallet.setCreateDate(LocalDateTime.now());
+            session.setAttribute("sumOfExpenses",0.0);
+            wallet = walletRepository.save(wallet);
+        }
+        else{
+            wallet = walletRepository.findByUserNameLike(username);
+        }
+
+        /*try{
+            wallet = walletRepository.findByUserNameLike(username);
         }catch(EmptyResultDataAccessException e){
             log.info("Kreira se  novčanik.");
             wallet.setUserName(username);
@@ -59,7 +82,7 @@ public class ExpenseController {
             wallet.setWalletType(Wallet.walletType.Gotovina);
             session.setAttribute("sumOfExpenses",0.0);
             wallet = walletRepository.save(wallet);
-        }
+        }*/
 
         Double sumOfExpenses = 0.0;
         Iterable<Expense> expenses = expenseRepository.findAll();
@@ -93,7 +116,7 @@ public class ExpenseController {
 
         log.info("Punim korisnikove troškove.");
         for(Expense e : allExpenses){
-            if(e.getWallet().getId().equals(walletRepository.findOne(wallet.getId()).getId())){
+            if(e.getWallet().getId().equals(walletRepository.findById(wallet.getId()).get().getId())){
                 expensesByUser.add(e);
             }
         }
@@ -116,15 +139,14 @@ public class ExpenseController {
 
     @GetMapping("/deleteExpense")
     public String deleteExpense(@RequestParam(name="expenseId")Long expenseId){
-        System.out.println(expenseId.toString());
-        System.out.println("Dođem do tu");
-        expenseRepository.delete(expenseId);
+
+        expenseRepository.deleteById(expenseId);
 
         return "redirect:/expenses/showExpenses";
     }
     @GetMapping("/editExpense")
     public String editExpense(@RequestParam(name="expenseId")Long id, Model model){
-        Expense expense = expenseRepository.findOne(id);
+        Expense expense = expenseRepository.findById(id).get();
         model.addAttribute("expense",expense);
 
         return "editExpense";
@@ -136,9 +158,17 @@ public class ExpenseController {
         System.out.println(expense.getType().toString());
         System.out.println(expense.getAmount().toString());
         expense.setWallet(wallet);
-        expenseRepository.update(id, expense);
+        Expense editedExpense = expenseRepository.findById(id).get();
+        editedExpense.setCreateDate(LocalDateTime.now());
+        editedExpense.setExpenseName(expense.getExpenseName());
+        editedExpense.setAmount(expense.getAmount());
+        editedExpense.setType(expense.getType());
+        editedExpense.setWallet(expense.getWallet());
+
+        expenseRepository.update(id,editedExpense);
         return "redirect:/expenses/showExpenses";
     }
+
     @PostMapping("/new")
     public String processForm(Wallet wallet, @Validated Expense expense, Errors errors, Model model, HttpSession session){
         log.info("Provjeravam validnost podataka.");
@@ -148,6 +178,7 @@ public class ExpenseController {
         }
 
         expense.setWallet(wallet);
+        expense.setCreateDate(LocalDateTime.now());
         expenseRepository.save(expense);
         wallet.getListOfExpenses().add(expense);
         Double sumOfExpenses = -wallet.getListOfExpenses().stream().mapToDouble(e -> e.getAmount()).sum();
@@ -162,6 +193,15 @@ public class ExpenseController {
         model.addAttribute("user", new User());
 
         return "userRegistration";
+    }
+
+    @GetMapping("/searchForExpenses")
+    public String searchForExpenses(@RequestParam(defaultValue = "")String expenseName, Model model){
+        Iterable<Expense> listOfExpenses = expenseRepository.findByExpenseNameLike(expenseName);
+
+
+        model.addAttribute("foundExpenses",listOfExpenses);
+        return "searchForExpenses";
     }
 
 

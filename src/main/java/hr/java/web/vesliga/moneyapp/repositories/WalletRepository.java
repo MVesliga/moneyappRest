@@ -1,11 +1,15 @@
 package hr.java.web.vesliga.moneyapp.repositories;
 
 import hr.java.web.vesliga.moneyapp.model.Wallet;
+import org.springframework.data.repository.CrudRepository;
 
-public interface WalletRepository {
+import java.util.Optional;
+
+public interface WalletRepository extends CrudRepository<Wallet, Long> {
     Iterable<Wallet> findAll();
-    Wallet findOne(Long id);
-    Wallet findOneByUsername(String username);
+    Optional<Wallet> findById(Long id);
+    Wallet findByUserNameLike(String username);
+    void deleteById(Long id);
     Wallet save(Wallet wallet);
-    void delete(Long id);
+    /*void delete(Long id);*/
 }

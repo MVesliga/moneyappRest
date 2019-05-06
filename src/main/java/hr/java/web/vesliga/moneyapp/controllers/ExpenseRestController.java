@@ -37,7 +37,7 @@ public class ExpenseRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Expense> findOne(@PathVariable Long id){
-        Expense expense =  expenseRepository.findOne(id);
+        Expense expense =  expenseRepository.findById(id).get();
         if(expense != null){
             return new ResponseEntity<>(expense, HttpStatus.OK);
         }
@@ -59,22 +59,22 @@ public class ExpenseRestController {
         }
 
         System.out.println(username);
-        Wallet wallet = walletRepository.findOneByUsername(username);
+        Wallet wallet = walletRepository.findByUserNameLike(username);
         expense.setWallet(wallet);
         return expenseRepository.save(expense);
     }
 
     @PutMapping("/{id}")
     public void update(@RequestBody Expense newExpense, @PathVariable Long id){
-        Expense expense = expenseRepository.findOne(id);
+        Expense expense = expenseRepository.findById(id).get();
         newExpense.setWallet(expense.getWallet());
 
-        expenseRepository.update(id,newExpense);
+        //expenseRepository.update(id,newExpense);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
-        expenseRepository.delete(id);
+        expenseRepository.deleteById(id);
     }
 }

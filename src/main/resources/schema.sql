@@ -13,20 +13,20 @@ authority varchar(20) not null
 
 create table if not exists Wallets(
 id identity,
-createDate timestamp not null,
-walletName varchar(50) not null,
-walletType varchar(10) not null,
-userName varchar(20)
+create_date timestamp not null,
+wallet_name varchar(50) not null,
+wallet_type varchar(10) not null,
+user_name varchar(20)
 );
 
 create table if not exists Expenses(
 id identity,
-createDate timestamp not null,
-expenseName varchar(50) not null,
+create_date timestamp not null,
+expense_name varchar(50) not null,
 amount double not null,
-expenseType varchar(20) not null,
-walletId int,
-FOREIGN KEY(walletId) REFERENCES Wallets(id)
+expense_type varchar(20) not null,
+wallet_id int,
+FOREIGN KEY(wallet_id) REFERENCES Wallets(id)
 );
 
 

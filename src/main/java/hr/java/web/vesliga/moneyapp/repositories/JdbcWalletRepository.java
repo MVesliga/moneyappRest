@@ -1,4 +1,4 @@
-package hr.java.web.vesliga.moneyapp.repositories;
+/*package hr.java.web.vesliga.moneyapp.repositories;
 
 import hr.java.web.vesliga.moneyapp.model.Wallet;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -73,4 +73,4 @@ public class JdbcWalletRepository implements WalletRepository {
     public void delete(Long id) {
 
     }
-}
+}*/
