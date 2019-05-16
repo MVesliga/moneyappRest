@@ -15,10 +15,11 @@
     <div class="container" style="text-align: center">
         <h3>Naziv troška:</h3>
         <form action="/expenses/searchForExpenses">
-            <div class="input-group center" style="padding-left:28%;">
-                <input type="text" class="form-control col-md-6" name="expenseName" placeholder="Naziv troška">
+
+                <input type="text" class="form-control" name="expenseName" placeholder="Naziv troška">
+
                 <span class="input-group-btn"><input type="submit" class="btn btn-primary" value="Pretraži"></span>
-            </div>
+
         </form>
         <br>
         <div th:if="${not #lists.isEmpty(foundExpenses)}" style="overflow-x: auto;" class="col-md-12 help">

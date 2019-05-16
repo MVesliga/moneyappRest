@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 
 
 @RestController
@@ -60,11 +62,13 @@ public class ExpenseRestController {
 
         System.out.println(username);
         Wallet wallet = walletRepository.findByUserNameLike(username);
+        expense.setCreateDate(LocalDateTime.of(2019, Month.MAY,15,13,50));
         expense.setWallet(wallet);
         return expenseRepository.save(expense);
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody Expense newExpense, @PathVariable Long id){
         Expense expense = expenseRepository.findById(id).get();
         newExpense.setWallet(expense.getWallet());

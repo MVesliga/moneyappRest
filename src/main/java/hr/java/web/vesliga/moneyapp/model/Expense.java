@@ -42,14 +42,14 @@ public class Expense {
     @Column(name="expense_type")
     @Enumerated(EnumType.STRING)
     @NotNull(message="Niste odabrali vrstu troška!")
-    private expenseType type;
+    private ExpenseType type;
 
     @ManyToOne(targetEntity = Wallet.class)
     @JoinColumn(name="wallet_id")
     @JsonBackReference
     private Wallet wallet;
 
-    public enum expenseType{
+    public enum ExpenseType{
         Hrana,
         Piće,
         Režije,

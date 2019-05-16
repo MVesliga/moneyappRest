@@ -104,7 +104,7 @@ public class ExpenseController {
     public String showForm(Model model){
         log.info("Pune se podaci za formu.");
         model.addAttribute("expense", new Expense());
-        model.addAttribute("expenseTypes", Expense.expenseType.values());
+        model.addAttribute("expenseTypes", Expense.ExpenseType.values());
 
         return "newExpense";
     }
@@ -114,7 +114,6 @@ public class ExpenseController {
         List<Expense> expensesByUser = new ArrayList();
         Iterable<Expense> allExpenses = expenseRepository.findAll();
 
-        log.info("Punim korisnikove troškove.");
         for(Expense e : allExpenses){
             if(e.getWallet().getId().equals(walletRepository.findById(wallet.getId()).get().getId())){
                 expensesByUser.add(e);
@@ -144,6 +143,7 @@ public class ExpenseController {
 
         return "redirect:/expenses/showExpenses";
     }
+
     @GetMapping("/editExpense")
     public String editExpense(@RequestParam(name="expenseId")Long id, Model model){
         Expense expense = expenseRepository.findById(id).get();
@@ -196,11 +196,14 @@ public class ExpenseController {
     }
 
     @GetMapping("/searchForExpenses")
-    public String searchForExpenses(@RequestParam(defaultValue = "")String expenseName, Model model){
-        Iterable<Expense> listOfExpenses = expenseRepository.findByExpenseNameLike(expenseName);
+    public String searchForExpenses(@RequestParam(defaultValue = "")String expenseName,
+                                    Model model){
+        List<Expense> listOfExpenses = new ArrayList<>();
 
+        listOfExpenses = expenseRepository.findByExpenseNameLike(expenseName);
 
         model.addAttribute("foundExpenses",listOfExpenses);
+        model.addAttribute("expenseTypes", Expense.ExpenseType.values());
         return "searchForExpenses";
     }
 

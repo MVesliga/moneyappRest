@@ -1,5 +1,6 @@
 package hr.java.web.vesliga.moneyapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
@@ -25,6 +26,7 @@ public class Wallet {
     private Long id;
 
     @Column(name="create_date")
+    @JsonIgnore
     private LocalDateTime createDate;
 
     @Column(name="wallet_name")
@@ -37,8 +39,9 @@ public class Wallet {
     @Column(name="user_name")
     private String userName;
 
+
     @OneToMany(mappedBy = "wallet", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Expense> listOfExpenses = new ArrayList<>();
 
     public enum walletType{

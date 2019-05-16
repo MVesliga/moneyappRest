@@ -19,6 +19,14 @@ public interface ExpenseRepository extends CrudRepository<Expense, Long> {
     Expense save(Expense expense);
     List<Expense> findByExpenseNameLike(String expenseName);
 
+    @Query("select e from  Expense e  where e.expenseName = :expenseName and e.type = :expenseType and e.amount between :priceFrom and :priceTo")
+    List<Expense> pretrazi(@Param("expenseName") String expenseName,
+                               @Param("expenseType")Expense.ExpenseType expenseType,
+                               @Param("priceFrom")Double priceFrom,
+                               @Param("priceTo")Double priceTo);
+    @Query("select e from  Expense e  where e.expenseName = :expenseName and e.type = :expenseType")
+    List<Expense>pretraziImeTip(@Param("expenseName") String expenseName,
+                                @Param("expenseType")Expense.ExpenseType expenseType);
     @Transactional
     @Modifying
     @Query("delete from Expense e where e.wallet.id = :id")
