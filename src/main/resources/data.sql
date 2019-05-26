@@ -1,3 +1,8 @@
+delete from users;
+delete from authorities;
+delete from wallets;
+delete from expenses;
+
 insert into users (username,password,enabled) values ('admin','$2a$12$YunQ3xQT.WT7iJpWS7ic/.yrsdPzhg/asmwRu3pQ.4OWaP.EG2CRK',1);
 insert into users (username,password,enabled) values ('student','$2a$12$WYCJYzj6qV75ibzCdrL3IexcCd40JvaIPk6G0G/OzjoWZBIn6c.DO',1);
 
@@ -9,3 +14,5 @@ insert into wallets (create_date,wallet_name,wallet_type,user_name) values ('201
 /*insert into wallets (create_date,wallet_name,wallet_type,user_name) values ('2019-05-15 10:45:49','Student wallet', 'Gotovina', 'student');*/
 
 insert into expenses (create_date,expense_name,amount,expense_type,wallet_id) values ('2019-05-15 13:45:50','Jagode',15,'Hrana',1);
+insert into expenses (create_date,expense_name,amount,expense_type,wallet_id) values ('2019-05-15 13:45:50','Piva',10,'Piće',1);
+insert into expenses (create_date,expense_name,amount,expense_type,wallet_id) values ('2019-05-15 13:45:50','Režije',150,'Režije',1);

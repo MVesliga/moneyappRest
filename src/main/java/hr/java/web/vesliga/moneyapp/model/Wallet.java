@@ -34,7 +34,7 @@ public class Wallet {
 
     @Enumerated(EnumType.STRING)
     @Column(name="wallet_type")
-    private walletType walletType;
+    private WalletType walletType;
 
     @Column(name="user_name")
     private String userName;
@@ -44,7 +44,7 @@ public class Wallet {
     @JsonIgnore
     private List<Expense> listOfExpenses = new ArrayList<>();
 
-    public enum walletType{
+    public enum WalletType{
         Gotovina
     }
 

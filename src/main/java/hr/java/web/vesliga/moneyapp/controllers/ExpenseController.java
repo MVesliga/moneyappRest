@@ -23,6 +23,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class ExpenseController {
             log.info("Kreira se  novčanik.");
             wallet.setUserName(username);
             wallet.setWalletName(username + " wallet");
-            wallet.setWalletType(Wallet.walletType.Gotovina);
+            wallet.setWalletType(Wallet.WalletType.Gotovina);
             wallet.setCreateDate(LocalDateTime.now());
             session.setAttribute("sumOfExpenses",0.0);
             wallet = walletRepository.save(wallet);
@@ -114,6 +115,7 @@ public class ExpenseController {
         List<Expense> expensesByUser = new ArrayList();
         Iterable<Expense> allExpenses = expenseRepository.findAll();
 
+
         for(Expense e : allExpenses){
             if(e.getWallet().getId().equals(walletRepository.findById(wallet.getId()).get().getId())){
                 expensesByUser.add(e);
@@ -154,10 +156,7 @@ public class ExpenseController {
 
     @PostMapping("/editExpense")
     public String processEditForm(@RequestParam(name="expenseId") Long id,Expense expense, Wallet wallet){
-        System.out.println(expense.getExpenseName());
-        System.out.println(expense.getType().toString());
-        System.out.println(expense.getAmount().toString());
-        expense.setWallet(wallet);
+                expense.setWallet(wallet);
         Expense editedExpense = expenseRepository.findById(id).get();
         editedExpense.setCreateDate(LocalDateTime.now());
         editedExpense.setExpenseName(expense.getExpenseName());
@@ -174,11 +173,12 @@ public class ExpenseController {
         log.info("Provjeravam validnost podataka.");
         if(errors.hasErrors()){
             log.info("Trošak ima grešku. Prekida se slanje.");
+            log.info(errors.getAllErrors().toString());
             return "newExpense";
         }
 
         expense.setWallet(wallet);
-        expense.setCreateDate(LocalDateTime.now());
+        expense.setCreateDate(LocalDateTime.of(2019, Month.MAY,16,17,0));
         expenseRepository.save(expense);
         wallet.getListOfExpenses().add(expense);
         Double sumOfExpenses = -wallet.getListOfExpenses().stream().mapToDouble(e -> e.getAmount()).sum();

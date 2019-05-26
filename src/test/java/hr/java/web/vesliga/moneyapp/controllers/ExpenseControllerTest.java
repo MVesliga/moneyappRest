@@ -57,7 +57,7 @@ public class ExpenseControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-   @Before
+   /*@Before
     public void before() {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(Expense.class)
@@ -75,7 +75,7 @@ public class ExpenseControllerTest {
         session = sessionFactory.openSession();
 
 
-    }
+    }*/
 
     @Test
     public void testFormLogin() throws Exception{
@@ -106,21 +106,19 @@ public class ExpenseControllerTest {
        .andExpect(status().is3xxRedirection());
     }
 
-   /* @Test
+   @Test
     public void testExpensePost() throws Exception{
         expenseMap.add("expenseName","Novi trošak");
         expenseMap.add("amount","300");
-        expenseMap.add("expenseType",Expense.ExpenseType.Dugovanje.toString());
+        expenseMap.add("type",Expense.ExpenseType.Dugovanje.toString());
         expenseMap.add("walletId","1");
 
-       expense.setExpenseName("Novi trošak");
-       expense.setAmount(12D);
-       expense.setType(Expense.ExpenseType.Stanarina);
+
 
        this.mockMvc.perform(post("/expenses/new").with(user("admin").password("adminpass").roles("USER","ADMIN")).with(csrf())
-               .params(expenseMap))
-               .andExpect(view().name("acceptedExpense"));
-    }*/
+            .params(expenseMap))
+            .andExpect(view().name("acceptedExpense"));
+}
 
    @Test
    public void testExpenseSearch() throws Exception{
@@ -131,9 +129,11 @@ public class ExpenseControllerTest {
         .andExpect(view().name("searchForExpenses"));
    }
 
-    @After
+   /*
+
+   @After
     public void after(){
         session.close();
         sessionFactory.close();
-    }
+    }*/
 }

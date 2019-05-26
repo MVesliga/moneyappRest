@@ -1,6 +1,7 @@
 package hr.java.web.vesliga.moneyapp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jdk.jfr.Name;
 import lombok.*;
 
@@ -24,6 +25,7 @@ public class Expense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @Column(name="create_date")

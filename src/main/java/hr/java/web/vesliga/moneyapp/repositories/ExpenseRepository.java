@@ -27,6 +27,10 @@ public interface ExpenseRepository extends CrudRepository<Expense, Long> {
     @Query("select e from  Expense e  where e.expenseName = :expenseName and e.type = :expenseType")
     List<Expense>pretraziImeTip(@Param("expenseName") String expenseName,
                                 @Param("expenseType")Expense.ExpenseType expenseType);
+    //SELECT expense_type,sum(amount) as SUM, min(amount) as MIN, max(amount) as MAX from expenses group by expense_type where wallet_id = 1;
+    @Query("select e.type, sum(e.amount) as SUM, min(e.amount) as MIN, max(e.amount) as MAX from Expense e group by e.type")
+    List<?> listByExpenseType();
+
     @Transactional
     @Modifying
     @Query("delete from Expense e where e.wallet.id = :id")
