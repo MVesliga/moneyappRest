@@ -31,19 +31,19 @@ public class Expense {
     @Column(name="create_date")
     private LocalDateTime createDate;
 
-    @NotEmpty(message="Niste unjeli naziv troška!")
-    @Size(min=5, max=30, message="Naziv troška mora imati između 5 i 30 znakova")
+    @NotEmpty(message="{msg.validation.expenseName}")
+    @Size(min=5, max=30, message="{msg.validation.expenseName.length}")
     @Column(name="expense_name")
     private String expenseName;
 
 
-    @NotNull(message="Niste unjeli iznos troška!")
+    @NotNull(message="{msg.validation.expenseAmount}")
     @DecimalMin(value="1",message="Možete unjeti minimalni iznos od 1 kn!")
     private Double amount;
 
     @Column(name="expense_type")
     @Enumerated(EnumType.STRING)
-    @NotNull(message="Niste odabrali vrstu troška!")
+    @NotNull(message="{msg.validation.expenseAmount}")
     private ExpenseType type;
 
     @ManyToOne(targetEntity = Wallet.class)

@@ -7,7 +7,7 @@
     <br/>
     <div style="text-align: center;" sec:authorize="isAuthenticated()">
         <form method="POST" th:action="@{/logout}">
-            Ulogirani ste kao <span sec:authentication="name">Korisnik</span>.
+            <p><span th:text="#{msg.login.loggedIn}"></span><span> </span><span sec:authentication="name"></span></p>
             <input type="submit" value="Logout" class="btn btn-danger gumb">
         </form>
     </div>
@@ -16,10 +16,10 @@
         <div th:if="${not #lists.isEmpty(expenses)}" style="overflow-x: auto;" class="col-md-12 help">
             <table class="table">
                 <thead>
-                <th>Naziv troška</th>
-                <th>Datum unosa troška</th>
-                <th>Iznos troška</th>
-                <th>Kategorija troška</th>
+                <th th:text="#{msg.show.name}">Naziv troška</th>
+                <th th:text="#{msg.show.date}">Datum unosa troška</th>
+                <th th:text="#{msg.show.amount}">Iznos troška</th>
+                <th th:text="#{msg.show.type}">Kategorija troška</th>
                 </thead>
                 <tbody>
                 <tr th:each="expense : ${expenses}">
@@ -27,13 +27,13 @@
                     <td th:text="${#temporals.format(expense.createDate, 'dd.MM.yyyy.')}">Datum unosa troška</td>
                     <td th:text="${expense.amount}">Iznos troška</td>
                     <td th:text="${expense.type}">Kategorija troška</td>
-                    <td><button class="btn btn-primary gumb"><a th:href="@{/expenses/editExpense(expenseId=${expense.id})}">Edit</a></button></td>
-                   <td><button class="btn btn-danger gumb"><a th:href="@{/expenses/deleteExpense(expenseId=${expense.id})}">Delete</a></button></td>
+                    <td><button class="btn btn-primary gumb"><a th:href="@{/expenses/editExpense(expenseId=${expense.id})}" th:text="#{msg.btn.edit}">Edit</a></button></td>
+                   <td><button class="btn btn-danger gumb"><a th:href="@{/expenses/deleteExpense(expenseId=${expense.id})}" th:text="#{msg.btn.delete}">Delete</a></button></td>
 
                 </tr>
                 </tbody>
             </table>
-            <h4 style="float:right;"  th:text="'Ukupni iznos troškova: ' + ${sum} + 'kn'">Ukupni iznos troškova</h4>
+            <h4 style="float:right;"  th:text="#{msg.show.sum} + ${sum} + 'kn'">Ukupni iznos troškova</h4>
         </div>
 
         <p th:if="${#lists.isEmpty(expenses)}">Nema unešenih troškova!</p>
@@ -41,9 +41,9 @@
     </div>
 
     <div style="text-align: center">
-        <button class="btn btn-warning gumb" style="color:black;"><a th:href="@{/expenses/new}">Unesi novi trošak</a></button>
-        <button class="btn btn-danger gumb"><a th:href="@{/expenses/resetWallet}">Resetiraj novčanik</a></button>
-        <button class="btn btn-warning gumb" style="color:black;"><a th:href="@{/expenses/searchForExpenses}">Pretraga troškoga</a></button>
+        <button class="btn btn-warning gumb" style="color:black;"><a th:href="@{/expenses/new}" th:text="#{msg.btn.enterExpense}">Unesi novi trošak</a></button>
+        <button class="btn btn-danger gumb"><a th:href="@{/expenses/resetWallet}" th:text="#{msg.btn.resetWallet}">Resetiraj novčanik</a></button>
+        <button class="btn btn-warning gumb" style="color:black;"><a th:href="@{/expenses/searchForExpenses}" th:text="#{msg.btn.searchExpenses}">Pretraga troškoga</a></button>
     </div>
 </main>
 </body>

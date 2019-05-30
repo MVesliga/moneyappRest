@@ -27,7 +27,6 @@ public class StatisticsJob extends QuartzJobBean {
         System.out.format("%15s%15s%15s%15s\n", "", "SUM", "MIN", "MAX");
         for(int i = 0; i < lista.size(); i++){
             Object[] row = (Object[]) lista.get(i);
-           // System.out.println(row[0] + " " + row[1] + " " + row[2] + " " + row[3]);
             System.out.format("%15s%15s%15s%15s\n", row[0], row[1], row[2], row[3]);
         }
         System.out.println("----------------------------------------------------------------");

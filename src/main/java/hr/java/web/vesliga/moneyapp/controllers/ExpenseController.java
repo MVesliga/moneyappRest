@@ -74,17 +74,6 @@ public class ExpenseController {
             wallet = walletRepository.findByUserNameLike(username);
         }
 
-        /*try{
-            wallet = walletRepository.findByUserNameLike(username);
-        }catch(EmptyResultDataAccessException e){
-            log.info("Kreira se  novčanik.");
-            wallet.setUserName(username);
-            wallet.setWalletName(username + " wallet");
-            wallet.setWalletType(Wallet.walletType.Gotovina);
-            session.setAttribute("sumOfExpenses",0.0);
-            wallet = walletRepository.save(wallet);
-        }*/
-
         Double sumOfExpenses = 0.0;
         Iterable<Expense> expenses = expenseRepository.findAll();
         for(Expense e : expenses){

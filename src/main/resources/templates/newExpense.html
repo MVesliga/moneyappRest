@@ -9,7 +9,7 @@
 
     <div style="text-align: center" sec:authorize="isAuthenticated()">
         <form method="POST" th:action="@{/logout}">
-            Ulogirani ste kao <span sec:authentication="name">Korisnik</span>.
+            <p><span th:text="#{msg.login.loggedIn}"></span><span> </span><span sec:authentication="name"></span></p>
             <input type="submit" value="Logout" class="btn btn-danger gumb">
         </form>
     </div>
@@ -17,12 +17,12 @@
     <div class="container">
         <div class=" col-md-8 help">
             <div class="row">
-                <h1>Unos novog troška </h1>
+                <h1 th:text="#{msg.new.enterNewExpense}">Unos novog troška </h1>
             </div>
             <form method="POST" th:object="${expense}">
                 <div class="row">
                         <div class="col-sm-12">
-                            <label>Naziv:</label>
+                            <label th:text="#{msg.new.name}">Naziv:</label>
                         </div>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" th:field="*{expenseName}">
@@ -30,23 +30,23 @@
                         </div>
                 </div>
                 <div class="form-group">
-                    <label>Vrsta:</label>
+                    <label th:text="#{msg.new.type}">Vrsta:</label>
                     <select th:field="*{type}" class="form-control">
-                        <option value="">>---------Odaberite vrstu---------<</option>
+                        <option value="" th:text="#{msg.new.selectValue}">>---------Odaberite vrstu---------<</option>
                         <option th:each="type : ${expenseTypes}" th:value="${type}" th:text="${type}"></option>
                     </select>
                     <span class="validation-error" style="color:#ffc107;" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Expense type error</span>
                 </div>
                 <div class="form-group">
-                    <label>Iznos:</label>
+                    <label th:text="#{msg.new.amount}">Iznos:</label>
                     <input type="number" step="0.01" class="form-control" th:field="*{amount}">
                     <span class="validation-error" style="color:#ffc107;" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Expense amount error</span>
                 </div>
                 <div style="text-align: center">
                     <!--<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>-->
-                    <input type="submit" class="btn btn-warning gumb" style="color:black;" value="Unesi trošak">
-                    <button class="btn btn-warning gumb" style="color:black;"><a th:href="@{/expenses/showExpenses}">Prikaži moje troškove</a></button>
-                    <button class="btn btn-warning gumb" style="color:black;"><a th:href="@{/expenses/searchForExpenses}">Pretraga troškoga</a></button>
+                    <input type="submit" class="btn btn-warning gumb" style="color:black;" th:value="#{msg.btn.enterExpense}">
+                    <button class="btn btn-warning gumb" style="color:black;"><a th:href="@{/expenses/showExpenses}" th:text="#{msg.btn.showMyExpenses}">Prikaži moje troškove</a></button>
+                    <button class="btn btn-warning gumb" style="color:black;"><a th:href="@{/expenses/searchForExpenses}" th:text="#{msg.btn.searchExpenses}">Pretraga troškoga</a></button>
                     <!--<button class="btn btn-warning gumb" style="color:black;"><a th:href="@{/expenses/administration}">Prikaži administraciju</a></button>-->
                 </div>
             </form>

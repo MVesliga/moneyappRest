@@ -7,28 +7,28 @@
     <br/>
     <div style="text-align: center;" sec:authorize="isAuthenticated()">
         <form method="POST" th:action="@{/logout}">
-            Ulogirani ste kao <span sec:authentication="name">Korisnik</span>.
+            <p><span th:text="#{msg.login.loggedIn}"></span><span> </span><span sec:authentication="name"></span></p>
             <input type="submit" value="Logout" class="btn btn-danger gumb">
         </form>
     </div>
     <br/>
     <div class="container" style="text-align: center">
-        <h3>Naziv troška:</h3>
+        <h3 th:text="#{msg.search.name}">Naziv troška:</h3>
         <form action="/expenses/searchForExpenses">
 
-                <input type="text" class="form-control" name="expenseName" placeholder="Naziv troška">
+                <input type="text" class="form-control" name="expenseName" th:placeholder="#{msg.search.name}">
 
-                <span class="input-group-btn"><input type="submit" class="btn btn-primary" value="Pretraži"></span>
+                <span class="input-group-btn"><input type="submit" class="btn btn-primary" th:value="#{msg.btn.search}"></span>
 
         </form>
         <br>
         <div th:if="${not #lists.isEmpty(foundExpenses)}" style="overflow-x: auto;" class="col-md-12 help">
             <table class="table">
                 <thead>
-                <th>Naziv troška</th>
-                <th>Datum unosa troška</th>
-                <th>Iznos troška</th>
-                <th>Kategorija troška</th>
+                <th th:text="#{msg.show.name}">Naziv troška</th>
+                <th th:text="#{msg.show.date}">Datum unosa troška</th>
+                <th th:text="#{msg.show.amount}">Iznos troška</th>
+                <th th:text="#{msg.show.type}">Kategorija troška</th>
                 </thead>
                 <tbody>
                 <tr th:each="expense : ${foundExpenses}">
@@ -41,14 +41,14 @@
             </table>
         </div>
 
-        <p th:if="${#lists.isEmpty(foundExpenses)}">Nije pronađen ni jedan trošak!</p>
+        <p th:if="${#lists.isEmpty(foundExpenses)}" th:text="#{msg.search.notFound}">Nije pronađen ni jedan trošak!</p>
 
 
     </div>
 
     <div style="text-align: center">
-        <button class="btn btn-warning gumb" style="color:black;"><a th:href="@{/expenses/new}">Unesi novi trošak</a></button>
-        <button class="btn btn-danger gumb"><a th:href="@{/expenses/resetWallet}">Resetiraj novčanik</a></button>
+        <button class="btn btn-warning gumb" style="color:black;"><a th:href="@{/expenses/new}" th:text="#{msg.btn.enterExpense}">Unesi novi trošak</a></button>
+        <button class="btn btn-danger gumb"><a th:href="@{/expenses/resetWallet}" th:text="#{msg.btn.resetWallet}">Resetiraj novčanik</a></button>
     </div>
 </main>
 </body>

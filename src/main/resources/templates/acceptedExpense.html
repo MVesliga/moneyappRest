@@ -7,24 +7,24 @@
     <br/>
     <div style="text-align: center" sec:authorize="isAuthenticated()">
         <form method="POST" th:action="@{/logout}">
-            Ulogirani ste kao <span sec:authentication="name">Korisnik</span>.
+            <p><span th:text="#{msg.login.loggedIn}"></span><span> </span><span sec:authentication="name"></span></p>
             <input type="submit" value="Logout" class="btn btn-danger gumb">
         </form>
     </div>
     <br/>
     <div class="container" style="text-align: center">
         <div class="col-md-12 help">
-            <p>Čestitamo, uspješno ste unjeli trošak <b><span th:text="${expense.expenseName}">expense.name</span></b> u iznosu <span th:text="${expense.amount}">expense.amount</span> kn.</p>
-            <p>Trošak je unesen pod kategoriju <b><span th:text="${expense.type}"></span></b> na datum <span th:text="${#calendars.format(#calendars.createNow(), 'dd.MM.yyyy.')}">datum</span></p>
-            <p>Trenutno stanje u novčaniku <b><span th:text="${wallet.walletName}">expense.wallet.name</span></b> je <span th:text="${session.sumOfExpenses.toString()}">Sum of expenses</span></p>
+            <p><span th:text="#{msg.accepted.congratulations}"></span><b><span th:text="${expense.expenseName}">expense.name</span></b><span> </span><span th:text="#{msg.accepted.amount}"></span><span th:text="${expense.amount}">expense.amount</span><span>kn.</span></p>
+            <p><span th:text="#{msg.accepted.category}"></span><b><span th:text="${expense.type}"></span></b><span> </span><span th:text="#{msg.accepted.date}"></span><span th:text="${#calendars.format(#calendars.createNow(), 'dd.MM.yyyy.')}">datum</span></p>
+            <p><span th:text="#{msg.accepted.wallet}"></span><b><span th:text="${wallet.walletName}">expense.wallet.name</span></b><span> </span><span th:text="#{msg.accepted.is}"></span><span th:text="${session.sumOfExpenses.toString()}">Sum of expenses</span></p>
         </div>
     </div>
 
     <div style="text-align: center">
-        <button class="btn btn-warning gumb"><a th:href="@{/expenses/new}">Unesi novi trošak</a></button>
-        <button class="btn btn-warning gumb"><a th:href="@{/expenses/showExpenses}">Prikaži moje troškove</a></button>
+        <button class="btn btn-warning gumb"><a th:href="@{/expenses/new}" th:text="#{msg.btn.enterExpense}">Unesi novi trošak</a></button>
+        <button class="btn btn-warning gumb"><a th:href="@{/expenses/showExpenses}" th:text="#{msg.btn.showMyExpenses}">Prikaži moje troškove</a></button>
         <div sec:authorize="hasRole('ROLE_ADMIN')">
-            <button class="btn btn-danger gumb"><a th:href="@{/expenses/resetWallet}">Resetiraj novčanik</a></button>
+            <button class="btn btn-danger gumb"><a th:href="@{/expenses/resetWallet}" th:text="#{msg.btn.resetWallet}">Resetiraj novčanik</a></button>
         </div>
     </div>
 </main>

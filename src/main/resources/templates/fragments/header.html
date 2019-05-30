@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-    </script>
-
-</head>
+    </head>
 <body>
     <header th:fragment="header">
         <h1>TVZ Money App</h1>
         <h3 th:text="#{lang.select}">language select</h3>
         <select id="locales">
-            <option value="hr"
+            <option th:value="hr"
                     th:selected="${#locale.language == 'hr'}"
                     th:text="#{msg.lang.hr}"></option>
 
-            <option value="en"
+            <option th:value="en"
                     th:selected="${#locale.language == 'en'}"
                     th:text="#{msg.lang.en}"></option>
         </select>
 
-    </header>
-    <script type="application/javascript">
-        $(document).ready(function() {
-            $("#locales").change(function () {
-                var selectedOption = $('#locales').val();
-                if (selectedOption != ''){
-                    window.location.replace('?language=' + selectedOption);
-                }
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+        <script th:inline="javascript">
+            $(document).ready(function() {
+                $("#locales").change(function () {
+                    var selectedOption = $('#locales').val();
+                    if (selectedOption != ''){
+                        window.location.replace('?language=' + selectedOption);
+                    }
+                });
             });
-        });
-    </script>
+        </script>
+    </header>
 </body>
 </html>
